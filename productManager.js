@@ -20,7 +20,7 @@ class ProductManager {
       console.log(error);
     }
   }
-  async addProduct({ title, description, price, thumbnail, code, stock }) {
+  async addProduct({ title, description, code, price, stock, categoty, thumbnail }) {
     try {
       const productosFile = await this.getProducts();
       const productoEncontrado = productosFile.find(
@@ -29,13 +29,15 @@ class ProductManager {
 
       if (productoEncontrado === undefined) {
         productosFile.push({
-          id: productosFile.length + 1,
+          id: Math.round(Math.random()*10000),
           title,
           description,
-          price,
-          thumbnail,
           code,
+          price,
+          status: true,
           stock,
+          categoty,
+          thumbnail,
         });
         await fs.promises.writeFile(this.path, JSON.stringify(productosFile));
       } else {
